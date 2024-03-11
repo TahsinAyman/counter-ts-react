@@ -1,13 +1,18 @@
 import { useState } from "react";
 
+interface LoginForm {
+  username: string;
+  password: string;
+}
+
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState<string>();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
+    const username = (event.target as HTMLFormElement).username.value;
+    const password = (event.target as HTMLFormElement).password.value;
     if (username == "admin" && password == "123") {
       setIsAuthenticated(true);
       setError(undefined);
