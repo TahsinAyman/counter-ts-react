@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [error, setError] = useState<string>();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+    if (username == "admin" && password == "123") {
+      setIsAuthenticated(true);
+      setError(undefined);
+    } else {
+      setError("Invalid Credentails");
+      setIsAuthenticated(false);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      {isAuthenticated && <h1 data-testid="result">Welcome Admin</h1>}
+      {error && (
+        <h1 data-testid="result" style={{ color: "red" }}>
+          {error}
+        </h1>
+      )}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="username"
+          data-testid="username"
+        />
+        <br />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          data-testid="password"
+        />
+        <br />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
 }
-
-export default App
