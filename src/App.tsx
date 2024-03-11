@@ -1,10 +1,5 @@
 import { useState } from "react";
 
-interface LoginForm {
-  username: string;
-  password: string;
-}
-
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState<string>();
